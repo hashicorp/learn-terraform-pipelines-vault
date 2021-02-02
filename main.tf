@@ -1,3 +1,5 @@
+
+
 terraform {
   backend "remote" {
     organization = "infrastructure-pipelines-workshop"
@@ -6,7 +8,17 @@ terraform {
       name = "rachel-s-vault"
     }
   }
+required_providers {
+    helm = {
+      source  = "hashicorp/helm"
+      version = "~> 2.0.1"
+    }
 }
+
+required_version = "~> 0.14"
+}
+
+
 
 
 data "terraform_remote_state" "cluster" {
@@ -30,7 +42,6 @@ data "terraform_remote_state" "consul" {
 }
 
 provider "helm" {
-  version = "~> 1.0"
   kubernetes {
     load_config_file       = false
     host                   = data.terraform_remote_state.cluster.outputs.host
