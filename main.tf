@@ -1,5 +1,3 @@
-
-
 terraform {
   backend "remote" {
     organization = "infrastructure-pipelines-workshop"
@@ -8,18 +6,15 @@ terraform {
       name = "rachel-s-vault"
     }
   }
-required_providers {
+  required_providers {
     helm = {
       source  = "hashicorp/helm"
       version = "~> 2.0.1"
     }
+  }
+
+  required_version = "~> 0.14"
 }
-
-required_version = "~> 0.14"
-}
-
-
-
 
 data "terraform_remote_state" "cluster" {
   backend = "remote"
@@ -42,11 +37,11 @@ data "terraform_remote_state" "consul" {
 }
 
 provider "helm" {
-   kubernetes {
-     host                   = data.terraform_remote_state.cluster.outputs.host
-     username               = data.terraform_remote_state.cluster.outputs.username
-     password               = data.terraform_remote_state.cluster.outputs.password
-     cluster_ca_certificate = data.terraform_remote_state.cluster.outputs.cluster_ca_certificate
+  kubernetes {
+    host                   = data.terraform_remote_state.cluster.outputs.host
+    username               = data.terraform_remote_state.cluster.outputs.username
+    password               = data.terraform_remote_state.cluster.outputs.password
+    cluster_ca_certificate = data.terraform_remote_state.cluster.outputs.cluster_ca_certificate
 
-   }
- }
+  }
+}
