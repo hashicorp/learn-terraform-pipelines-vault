@@ -42,11 +42,11 @@ data "terraform_remote_state" "consul" {
 }
 
 provider "helm" {
-  kubernetes {
-    load_config_file       = false
-    host                   = data.terraform_remote_state.cluster.outputs.host
-    username               = data.terraform_remote_state.cluster.outputs.username
-    password               = data.terraform_remote_state.cluster.outputs.password
-    cluster_ca_certificate = data.terraform_remote_state.cluster.outputs.cluster_ca_certificate
-  }
-}
+   kubernetes {
+     host                   = data.terraform_remote_state.cluster.outputs.host
+     username               = data.terraform_remote_state.cluster.outputs.username
+     password               = data.terraform_remote_state.cluster.outputs.password
+     cluster_ca_certificate = data.terraform_remote_state.cluster.outputs.cluster_ca_certificate
+
+   }
+ }
