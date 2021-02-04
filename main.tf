@@ -51,6 +51,13 @@ data "google_container_cluster" "my_cluster" {
   location = data.terraform_remote_state.cluster.outputs.region
 }
 
+provider "kubernetes" {
+  host                   = data.terraform_remote_state.cluster.outputs.host
+  token                  = data.google_client_config.default.access_token
+  cluster_ca_certificate = data.terraform_remote_state.cluster.outputs.cluster_ca_certificate
+
+}
+
 provider "helm" {
   kubernetes {
     host                   = data.terraform_remote_state.cluster.outputs.host
