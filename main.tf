@@ -37,7 +37,6 @@ data "terraform_remote_state" "consul" {
 }
 
 
-
 # Retrieve GKE cluster information
 provider "google" {
   project = data.terraform_remote_state.cluster.outputs.project_id
