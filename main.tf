@@ -37,23 +37,25 @@ data "terraform_remote_state" "consul" {
 }
 
 
+
 # Retrieve GKE cluster information
 provider "google" {
-  project = data.terraform_remote_state.consul.project_id
-  region  = data.terraform_remote_state.consul.region
+  project = data.terraform_remote_state.cluster.outputs.project_id
+  region  = data.terraform_remote_state.cluster.outputs.region
 }
 
 data "google_client_config" "default" {}
 
 data "google_container_cluster" "my_cluster" {
-  name     = data.terraform_remote_state.consul.outputs.cluster
-  location = data.terraform_remote_state.consul.outputs.region
- }
+  name     = data.terraform_remote_state.cluster.outputs.cluster
+  location = data.terraform_remote_state.cluster.outputs.region
+}
 
-provider "helm" {
+  provider "helm" {
   kubernetes {
     host                   = data.terraform_remote_state.cluster.outputs.host
-    token                  = data.google_client_config.default.access_token
+    username               = data.terraform_remote_state.cluster.outputs.username
+    password               = data.terraform_remote_state.cluster.outputs.password
     cluster_ca_certificate = data.terraform_remote_state.cluster.outputs.cluster_ca_certificate
   }
 }
