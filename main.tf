@@ -1,11 +1,11 @@
 terraform {
   # backend "remote" {
-  #   organization = "hashicorp-learn"
-
-  #   workspaces {
-  #     name = "learn-terraform-pipelines-vault"
+  #   organization = var.organization
+  #   workspaces = {
+  #     name = var.cluster_workspace
   #   }
   # }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -24,28 +24,9 @@ terraform {
   required_version = "~> 0.14"
 }
 
-# data "terraform_remote_state" "cluster" {
-#   backend = "remote"
-#   config = {
-#     organization = var.organization
-#     workspaces = {
-#       name = var.cluster_workspace
-#     }
-#   }
-# }
-
-# data "terraform_remote_state" "consul" {
-#   backend = "remote"
-#   config = {
-#     organization = var.organization
-#     workspaces = {
-#       name = var.consul_workspace
-#     }
-#   }
-# }
-
 data "terraform_remote_state" "eks_cluster" {
   backend = "local"
+
   config = {
     path = "../learn-terraform-pipelines-k8s/terraform.tfstate"
   }
@@ -53,6 +34,7 @@ data "terraform_remote_state" "eks_cluster" {
 
 data "terraform_remote_state" "consul" {
   backend = "local"
+
   config = {
     path = "../learn-terraform-pipelines-consul/terraform.tfstate"
   }
