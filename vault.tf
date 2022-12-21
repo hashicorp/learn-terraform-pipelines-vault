@@ -5,7 +5,7 @@ resource "helm_release" "vault" {
   namespace = data.terraform_remote_state.consul.outputs.namespace
 
   set {
-    name = "server.ha.enabled"
+    name  = "server.ha.enabled"
     value = "true"
   }
 }
