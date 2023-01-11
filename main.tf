@@ -9,11 +9,11 @@ terraform {
   required_providers {
     helm = {
       source  = "hashicorp/helm"
-      version = "~> 2.0.2"
+      version = "~> 2.8.0"
     }
   }
 
-  required_version = "~> 0.14"
+  required_version = ">= 1.1.0"
 }
 
 data "terraform_remote_state" "cluster" {
@@ -45,13 +45,8 @@ provider "google" {
 
 data "google_client_config" "default" {}
 
-data "google_container_cluster" "my_cluster" {
-  name     = data.terraform_remote_state.cluster.outputs.cluster
-  location = data.terraform_remote_state.cluster.outputs.region
-}
-
 provider "kubernetes" {
-  host                   = data.terraform_remote_state.cluster.outputs.host
+  host                   = "https://${data.terraform_remote_state.cluster.outputs.host}"
   token                  = data.google_client_config.default.access_token
   cluster_ca_certificate = data.terraform_remote_state.cluster.outputs.cluster_ca_certificate
 
