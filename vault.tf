@@ -1,9 +1,9 @@
 resource "helm_release" "vault" {
-  count      = data.terraform_remote_state.cluster.outputs.enable_consul_and_vault ? 1 : 0
-  name       = "${data.terraform_remote_state.consul.outputs.release_name}-vault"
+  count      = data.tfe_outputs.cluster.values.enable_consul_and_vault ? 1 : 0
+  name       = "${data.tfe_outputs.consul.values.release_name}-vault"
   repository = "https://helm.releases.hashicorp.com"
   chart      = "vault"
-  namespace  = data.terraform_remote_state.consul.outputs.namespace
+  namespace  = data.tfe_outputs.consul.values.namespace
 
   set {
     name  = "server.ha.enabled"
