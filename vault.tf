@@ -1,5 +1,4 @@
 resource "helm_release" "vault" {
-  count      = data.tfe_outputs.cluster.values.enable_consul_and_vault ? 1 : 0
   name       = "${data.tfe_outputs.consul.values.release_name}-vault"
   repository = "https://helm.releases.hashicorp.com"
   chart      = "vault"
