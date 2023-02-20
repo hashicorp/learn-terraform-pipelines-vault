@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 resource "helm_release" "vault" {
   name       = "${data.tfe_outputs.consul.values.release_name}-vault"
   repository = "https://helm.releases.hashicorp.com"
