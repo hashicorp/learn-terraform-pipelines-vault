@@ -5,6 +5,7 @@ resource "helm_release" "vault" {
   name       = "${data.tfe_outputs.consul.values.release_name}-vault"
   repository = "https://helm.releases.hashicorp.com"
   chart      = "vault"
+  version    = "0.25.0"
   namespace  = data.tfe_outputs.consul.values.namespace
 
   set {
